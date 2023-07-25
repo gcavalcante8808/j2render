@@ -4,6 +4,12 @@ from jinja2 import Environment, StrictUndefined
 from renderer.domain import ConfigFile, ConfigResource
 
 
+def render_templates_from_configfile(config_file):
+    config = render_config_from_file(config_file)
+
+    return (render_template_from_config_resource(resource) for resource in config.resources)
+
+
 def render_config_from_file(config_file: str) -> ConfigFile:
     with open(config_file, 'rb') as c:
         config = yaml.load(c.read(), yaml.SafeLoader)
