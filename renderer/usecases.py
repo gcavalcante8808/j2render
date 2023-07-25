@@ -1,10 +1,16 @@
+from typing import Iterable, List
+
 import yaml
 from jinja2 import Environment, StrictUndefined
 
-from renderer.domain import ConfigFile, ConfigResource
+from renderer.domain import ConfigFile, ConfigResource, Template
 
 
-def render_templates_from_configfile(config_file):
+def persist_rendered_templates_on_local_filesystem(templates: Iterable[Template]) -> List[str]:
+    raise NotImplementedError
+
+
+def render_templates_from_configfile(config_file) -> Iterable[Template]:
     config = render_config_from_file(config_file)
 
     return (render_template_from_config_resource(resource) for resource in config.resources)
@@ -17,8 +23,13 @@ def render_config_from_file(config_file: str) -> ConfigFile:
     return ConfigFile.from_dict(config)
 
 
-def render_template_from_config_resource(resource: ConfigResource) -> str:
+def render_template_from_config_resource(resource: ConfigResource) -> Template:
     with open(resource.template, 'rb') as tfile:
-        template = Environment(undefined=StrictUndefined).from_string(source=tfile.read().decode())
+        raw_content = tfile.read().decode()
+        template = Environment(undefined=StrictUndefined).from_string(source=raw_content)
 
-    return template.render(**resource.variables)
+    return Template.from_dict({
+        'raw_content': raw_content,
+        'rendered_content': template.render(**resource.variables),
+        'output_file': resource.output_file
+    })
