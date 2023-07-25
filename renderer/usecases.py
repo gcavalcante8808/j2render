@@ -6,8 +6,10 @@ from jinja2 import Environment, StrictUndefined
 from renderer.domain import ConfigFile, ConfigResource, Template
 
 
-def persist_rendered_templates_on_local_filesystem(templates: Iterable[Template]) -> List[str]:
-    raise NotImplementedError
+def persist_rendered_templates_on_local_filesystem(templates: Iterable[Template]) -> None:
+    for template in templates:
+        with open(template.output_file, 'wb') as tfile:
+            tfile.write(template.rendered_content.encode())
 
 
 def render_templates_from_configfile(config_file) -> Iterable[Template]:

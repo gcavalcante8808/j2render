@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 import yaml
 
@@ -38,14 +40,13 @@ def test_render_templates_from_configfile_when_config_is_oks(config_file):
     assert len(parsed_templates) == len(config.resources)
     assert parsed_templates[0]['items'][0]['key1'] == config.resources[0].variables['key1']
     assert parsed_templates[1]['items'][0]['key1'] == config.resources[1].variables['key1']
-    assert parsed_templates[2]['this']['is']['a']['template']['with']['values'][0]['key1'] == config.resources[2].variables['key1']
+    assert parsed_templates[2]['this']['is']['a']['template']['with']['values'][0]['key1'] == \
+           config.resources[2].variables['key1']
 
 
 def teste_render_and_persist_templates_on_localfilesystem_when_config_is_ok(config_file):
-    config = render_config_from_file(config_file)
-    expected_files = [resource.output_file for resource in config.resources]
     templates = render_templates_from_configfile(config_file)
 
-    persisted_files = persist_rendered_templates_on_local_filesystem(templates)
+    persist_rendered_templates_on_local_filesystem(templates)
 
-    assert persisted_files == expected_files
+    assert all([Path(template.output_file).is_file() for template in templates])
