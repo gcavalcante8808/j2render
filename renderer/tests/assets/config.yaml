@@ -1,0 +1,19 @@
+resources:
+  - name: yamlResource1
+    template: assets/template.yaml
+    to_render:
+      key1: value1
+      key2: value2
+      key3: value3
+  - name: yamlResource2
+    template: assets/template.yaml
+    to_render:
+      key1: AnotherValue
+      key2: AnotherValue2
+      key3: AnotherValue3
+  - name: jsonResource1
+    template: assets/template.yaml
+    to_render:
+      key1: JsonStringValue1
+      key2: JsonStringValue2
+      key3: JsonStringValue3
