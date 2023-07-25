@@ -18,7 +18,10 @@ def config_file(asset='assets/config.yaml') -> Dict:
 
 
 def test_can_convert_a_config_into_domain_object(config_file):
+    number_of_resources = len(config_file.get('resources'))
+
     config = ConfigFile.from_dict(config_file)
 
     assert config
     assert isinstance(config, ConfigFile)
+    assert len(config.resources) == number_of_resources
