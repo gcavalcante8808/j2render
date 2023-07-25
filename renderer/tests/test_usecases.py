@@ -23,6 +23,6 @@ def test_usecase_can_render_a_single_resource_when_config_is_ok(config_file):
 
     assert template
     parsed_template = yaml.load(template, Loader=yaml.SafeLoader)
-    assert parsed_template['items'][0]['key1'] == config.resources[0].to_render['key1']
-    assert parsed_template['items'][1]['key2'] == config.resources[0].to_render['key2']
-    assert parsed_template['items'][2]['key3'] == config.resources[0].to_render['key3']
+    assert parsed_template['items'][0]['key1'] == config.resources[0].variables['key1']
+    assert parsed_template['items'][1]['key2'] == config.resources[0].variables['key2']
+    assert parsed_template['items'][2]['key3'] == config.resources[0].variables['key3']

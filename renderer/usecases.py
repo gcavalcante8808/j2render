@@ -15,4 +15,4 @@ def render_template_from_config_resource(resource: ConfigResource) -> str:
     with open(resource.template, 'rb') as tfile:
         template = Environment(undefined=StrictUndefined).from_string(source=tfile.read().decode())
 
-    return template.render(**resource.to_render)
+    return template.render(**resource.variables)

@@ -6,14 +6,14 @@ from pydantic import BaseModel
 class ConfigResource(BaseModel):
     name: str
     template: str
-    to_render: Dict
+    variables: Dict
 
     @staticmethod
     def from_dict(resource):
         return ConfigResource(
             name=resource.get('name'),
             template=resource.get('template'),
-            to_render=resource.get('to_render')
+            variables=resource.get('variables')
         )
 
 
