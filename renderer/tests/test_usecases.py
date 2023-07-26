@@ -44,7 +44,7 @@ def test_render_templates_from_configfile_when_config_is_oks(config_file):
            config.resources[2].variables['key1']
 
 
-def teste_render_and_persist_templates_on_localfilesystem_when_config_is_ok(config_file):
+def test_render_and_persist_templates_on_localfilesystem_when_config_is_ok(config_file):
     templates = render_templates_from_configfile(config_file)
 
     persist_rendered_templates_on_local_filesystem(templates)
