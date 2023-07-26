@@ -2,10 +2,10 @@ PROJECT_NAME := "j2render"
 
 
 e2e-test: build-amd64
-    docker run -it --rm -v $(pwd)/renderer/tests/assets:/assets -v $(pwd)/data:/data --workdir /data debian:11-slim ./j2render_static.linux.amd64 -c assets/config.yaml
+    docker run --rm -v $(pwd)/renderer/tests/assets:/assets -v $(pwd)/data:/data --workdir /data debian:11-slim ./j2render_static.linux.amd64 -c assets/config.yaml
 
 e2e-arm64-test: build-arm64
-    docker run -it --rm -v $(pwd)/renderer/tests/assets:/assets -v $(pwd)/data:/data --workdir /data alpine ./j2render_static.linux.arm64 -c /assets/config.yaml
+    docker run --rm -v $(pwd)/renderer/tests/assets:/assets -v $(pwd)/data:/data --workdir /data alpine ./j2render_static.linux.arm64 -c /assets/config.yaml
 
 build-amd64:
 	just build amd64
