@@ -1,8 +1,12 @@
-FROM python:3.11-buster as builder
+FROM debian:11-slim as builder
 RUN apt-get update && \
     apt-get install scons \
                     patchelf \
                     upx \
+                    python3-minimal \
+                    python3-pip \
+                    python3-venv \
+                    python3-dev \
                     gcc --no-install-recommends -y
 ENV VIRTUAL_ENV=/usr/src/.venv
 RUN python3 -m venv $VIRTUAL_ENV
@@ -17,6 +21,6 @@ COPY renderer/ renderer/
 RUN pyinstaller -F cli.py
 RUN staticx dist/cli dist/cli_static
 
-FROM debian:12-slim
+FROM debian:11-slim
 COPY --from=builder /usr/src/dist/cli /usr/local/bin/j2render
 COPY --from=builder /usr/src/dist/cli_static /usr/local/bin/j2render_static
