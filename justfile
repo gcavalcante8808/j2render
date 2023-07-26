@@ -23,3 +23,5 @@ coverage:
 
     cd renderer/tests
     pytest --cov-report xml --cov=renderer .
+
+    cp .coverage ../../
