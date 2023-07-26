@@ -30,8 +30,8 @@ jobs:
           cd renderer/tests
           pytest
 
-  build:
-    name: Build for AMD64
+  publish:
+    name: Publish
     needs:
       - tests
     runs-on: ubuntu-latest
