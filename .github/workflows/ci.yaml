@@ -6,6 +6,9 @@ concurrency:
 
 on:
   pull_request:
+    paths:
+      - '!badges/**'
+      - '!README.md'
 
 jobs:
   tests:
