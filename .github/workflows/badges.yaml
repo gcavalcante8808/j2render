@@ -11,7 +11,7 @@ on:
     - doc/add-readme-and-badges
 
 jobs:
-  tests:
+  coverage:
     name: Coverage Badge
     runs-on: ubuntu-latest
     steps:
