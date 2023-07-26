@@ -19,15 +19,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      - uses: extractions/setup-just@v1
+
       - run: pip install -r requirements.txt
 
       - run: |
-          cd renderer/tests
-          pytest
+          just coverage
 
   build:
     name: Build for AMD64
