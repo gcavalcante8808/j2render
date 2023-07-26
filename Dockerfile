@@ -3,10 +3,6 @@ RUN apt-get update && \
     apt-get install scons \
                     patchelf \
                     upx \
-                    python3-minimal \
-                    python3-pip \
-                    python3-venv \
-                    python3-dev \
                     gcc --no-install-recommends -y
 ENV VIRTUAL_ENV=/usr/src/.venv
 RUN python3 -m venv $VIRTUAL_ENV
