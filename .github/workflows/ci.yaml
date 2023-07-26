@@ -37,6 +37,10 @@ jobs:
 
       - uses: extractions/setup-just@v1
 
+      - name : create data folder
+        run: |
+          mkdir data
+
       - name: Build&Test AMD64
         run: |
           just e2e-test
