@@ -1,0 +1,42 @@
+name: CI
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+
+jobs:
+  tests:
+    name: Run Unittests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - run: pip install -r requirements.txt
+
+      - run: |
+          cd renderer/tests
+          pytest
+
+  build:
+    name: Build for AMD64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: extractions/setup-just@v1
+
+      - name: Build&Test AMD64
+        run: |
+          just e2e-test
