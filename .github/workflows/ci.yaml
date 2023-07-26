@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
       - run: pip install -r requirements.txt
 
@@ -36,10 +36,6 @@ jobs:
           fetch-depth: 0
 
       - uses: extractions/setup-just@v1
-
-      - name : create data folder
-        run: |
-          mkdir data
 
       - name: Build&Test AMD64
         run: |
