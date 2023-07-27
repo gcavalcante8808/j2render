@@ -66,8 +66,8 @@ jobs:
       - uses: extractions/setup-just@v1
 
       - run: |
-          just build-amd64
-          just build-arm64
+          docker run --rm --platform linux/arm64 -v $(pwd)/data:/data gcavalcante8808/j2render cp /usr/local/bin/j2render /data/j2render.linux.arm64
+          docker run --rm --platform linux/amd64 -v $(pwd)/data:/data gcavalcante8808/j2render cp /usr/local/bin/j2render_static /data/j2render_static.linux.arm64
 
       - run: |
           sudo chmod -R a+rx data/
