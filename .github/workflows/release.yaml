@@ -36,6 +36,6 @@ jobs:
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "data/j2render_static.linux.amd64,data/j2render.linux.amd64"
+          artifacts: "data/*"
           token: ${{ secrets.GH_TOKEN }}
 #          bodyFile: "body.md"
