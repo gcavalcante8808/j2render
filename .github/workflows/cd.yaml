@@ -7,7 +7,7 @@ concurrency:
 on:
   push:
     branches:
-      - improvement/add-gh-release-support
+      - improvement/add-static-build-support
       - main
       - master
     paths:
@@ -34,46 +34,10 @@ jobs:
           cd renderer/tests
           pytest
 
-#  publish:
-#    name: Publish
-#    needs:
-#      - tests
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 0
-#
-#      - name: Set up QEMU
-#        uses: docker/setup-qemu-action@v2
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v2
-#
-#      - name: Login to Docker Hub
-#        uses: docker/login-action@v2
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_TOKEN }}
-#
-#      - name: Build and push
-#        uses: docker/build-push-action@v4
-#        with:
-#          context: .
-#          cache-from: type=gha
-#          cache-to: type=gha,mode=max
-#          platforms: linux/amd64,linux/arm64
-#          push: true
-#          tags: |
-#            gcavalcante8808/j2render:latest
-#            gcavalcante8808/j2render:1.0.0
-
-
-  release:
-    name: GH Release
-#    needs:
-#      - publish
+  publish:
+    name: Publish
+    needs:
+      - tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -81,13 +45,26 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: extractions/setup-just@v1
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
-      - name: Build AMD64
-        run: just build-amd64
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          files: |
-            data/j2render_static.linux.amd64
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            gcavalcante8808/j2render:latest
+            gcavalcante8808/j2render:1.0.0
