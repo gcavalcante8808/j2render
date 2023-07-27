@@ -1,0 +1,52 @@
+name: Semantic Versioning
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: false
+
+on:
+  push:
+    branches:
+      - improvement/add-gh-release-support
+      - main
+      - master
+    paths:
+      - '*/**'
+      - '!badges/**'
+      - '!README.md'
+
+jobs:
+  tagging:
+    name: Create Tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Application Version
+        id: version
+        uses: paulhatch/semantic-version@v5.0.2
+
+#      - name: Create git Tag
+#        env:
+#          VERSION: ${{ steps.version.outputs.version }}
+#          COMMIT_HASH: ${{ steps.version.outputs.current_commit }}
+#
+#        run: env
+      - name: Commit files
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          COMMIT_HASH: ${{ steps.version.outputs.current_commit }}
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git tag -a $VERSION -m "(MAJOR) Bump j2render version."
+          git tag -l
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          tags: true
