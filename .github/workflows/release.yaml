@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -33,4 +34,5 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "data/j2render_static.linux.amd64,data/j2render.linux.amd64"
+          token: ${{ secrets.GH_TOKEN }}
 #          bodyFile: "body.md"
