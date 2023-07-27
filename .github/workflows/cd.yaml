@@ -61,4 +61,12 @@ jobs:
           push: true
           tags: |
             gcavalcante8808/j2render:latest
-            gcavalcante8808/j2render:1.0.0
+            gcavalcante8808/j2render:${{github.ref_name}}
+
+      - run: |
+          sudo chmod -R a+rx data/
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "data/*"
+          token: ${{ secrets.GH_TOKEN }}
