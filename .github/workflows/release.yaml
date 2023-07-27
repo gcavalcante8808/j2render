@@ -1,0 +1,36 @@
+name: CD
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: false
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    name: GH Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - uses: extractions/setup-just@v1
+
+      - name: Build amd64
+        run: just build-amd64
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "data/j2render_static.linux.amd64,data/j2render.linux.amd64"
+#          bodyFile: "body.md"
