@@ -66,8 +66,8 @@ jobs:
       - uses: extractions/setup-just@v1
 
       - run: |
-          just build amd64
-          just build arm64
+          just build-amd64
+          just build-arm64
 
       - run: |
           sudo chmod -R a+rx data/
