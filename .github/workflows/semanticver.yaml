@@ -7,7 +7,6 @@ concurrency:
 on:
   push:
     branches:
-      - improvement/add-gh-release-support
       - main
       - master
     paths:
