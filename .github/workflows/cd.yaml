@@ -64,6 +64,10 @@ jobs:
             gcavalcante8808/j2render:${{github.ref_name}}
 
       - run: |
+          just build amd64
+          just build arm64
+
+      - run: |
           sudo chmod -R a+rx data/
 
       - uses: ncipollo/release-action@v1
