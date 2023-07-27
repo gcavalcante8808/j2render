@@ -1,7 +1,7 @@
 name: Semantic Versioning
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-semver
   cancel-in-progress: false
 
 on:
