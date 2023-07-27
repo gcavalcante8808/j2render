@@ -63,6 +63,8 @@ jobs:
             gcavalcante8808/j2render:latest
             gcavalcante8808/j2render:${{github.ref_name}}
 
+      - uses: extractions/setup-just@v1
+
       - run: |
           just build amd64
           just build arm64
