@@ -32,8 +32,7 @@ jobs:
         run: just build-amd64
 
       - run: |
-          ls -lha data/
-          exit 0
+          sudo chmor -R a+rx data/
 
       - uses: ncipollo/release-action@v1
         with:

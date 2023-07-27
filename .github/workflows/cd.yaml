@@ -6,14 +6,8 @@ concurrency:
 
 on:
   push:
-    branches:
-      - improvement/add-static-build-support
-      - main
-      - master
-    paths:
-      - '*/**'
-      - '!badges/**'
-      - '!README.md'
+    tags:
+      - '*'
 
 jobs:
   tests:
