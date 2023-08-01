@@ -25,7 +25,7 @@ FROM debian:11-slim
 RUN apt-get update && \
     apt-get install --no-install-recommends -y libexpat1 && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /usr/src/dist/cli /usr/local/bin/j2render
 COPY --from=builder /usr/src/dist/cli_static /usr/local/bin/j2render_static
